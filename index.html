@@ -1,8 +1,165 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8" />
-<title>拆我工位已搬到 boomoffice.app</title>
-<link rel="canonical" href="https://boomoffice.app/" />
-<meta name="robots" content="noindex" />
-<meta http-equiv="refresh" content="0; url=https://boomoffice.app/" />
-<script>location.replace('https://boomoffice.app/' + location.search + location.hash);</script>
-</head><body><p>拆我工位已搬到 <a href="https://boomoffice.app/">boomoffice.app</a></p></body></html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="description" content="拆我工位是一款打工人在线拆写字楼的解压小游戏：搜你公司的写字楼，用咖啡炸弹、键盘锤、周报陨石把它拆掉，30 秒一局，看能拆掉多少个工位。免下载，手机浏览器直接玩，免费。" />
+    <meta name="keywords" content="拆我工位,解压小游戏,拆楼游戏,打工人,上班族解压,在线解压,发泄游戏,网页游戏,写字楼,3D 破坏游戏,免下载小游戏" />
+    <meta name="theme-color" content="#1b2440" />
+    <meta name="google-site-verification" content="RHFJW6cWDRjSwd3boYyZlPRyWUYmI5binGUxLBo94Gc" />
+    <title>拆我工位｜打工人在线拆写字楼的解压小游戏</title>
+    <link rel="canonical" href="https://boomoffice.app/" />
+    <meta property="og:site_name" content="拆我工位" />
+    <meta property="og:title" content="拆我工位｜打工人在线拆写字楼的解压小游戏" />
+    <meta property="og:description" content="咖啡炸弹、周报陨石、年终奖核弹……30 秒，看你能拆掉多少个工位。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://boomoffice.app/" />
+    <meta property="og:image" content="https://boomoffice.app/og.jpg" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💥</text></svg>" />
+    <!-- 结构化数据：告诉搜索引擎和 AI 这是什么（和页面里「关于」区块的问答一致） -->
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "VideoGame", "name": "拆我工位", "alternateName": "BOOM OFFICE", "url": "https://boomoffice.app/", "description": "拆我工位是一款打工人在线拆写字楼的解压小游戏：搜你公司的写字楼，用咖啡炸弹、键盘锤、周报陨石把它拆掉，30 秒一局，看能拆掉多少个工位。免下载，手机浏览器直接玩，免费。", "image": "https://boomoffice.app/og.jpg", "inLanguage": "zh-CN", "genre": ["解压游戏", "休闲游戏", "破坏游戏"], "gamePlatform": ["Web browser", "Mobile browser"], "applicationCategory": "GameApplication", "operatingSystem": "Any", "playMode": "SinglePlayer", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CNY"}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "拆我工位是什么游戏？", "acceptedAnswer": {"@type": "Answer", "text": "一款 3D 网页解压小游戏。选一栋你上班的写字楼，用咖啡炸弹、键盘锤、周报陨石这些打工人武器把它拆掉，楼会真实地碎裂、倒塌。30 秒一局，结束后生成战报海报，看你拆掉了多少个工位。"}}, {"@type": "Question", "name": "有哪些写字楼可以拆？", "acceptedAnswer": {"@type": "Answer", "text": "目前收录了杭州、北京、上海、深圳、广州、成都、武汉、南京、西安、重庆 10 个城市的 166 个写字楼群和科技园区。没有你的楼可以在游戏里申请录入，申请满 3 人就排上日程。"}}, {"@type": "Question", "name": "有哪些武器？", "acceptedAnswer": {"@type": "Answer", "text": "咖啡炸弹、键盘锤、鼠标连点、周报陨石是免费武器；分享战报解锁 KPI 地震、加班火箭；一局里打出 S 评级解锁摸鱼巨鲸、需求龙卷风，打出 SS 解锁年终奖核弹。"}}, {"@type": "Question", "name": "怎么和同事比？", "acceptedAnswer": {"@type": "Answer", "text": "结束后分享战报海报或链接，同事打开会直接进入同一栋楼，和你的分数比一比；还有写字楼对抗榜，看哪栋楼被拆得最多。"}}]}]}</script>
+    <script type="module" crossorigin src="/assets/index-CMGBPE7M.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D3TZFsVY.css">
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+    <div id="toast" class="toast" hidden></div>
+
+    <section id="select" class="home">
+      <div class="home-inner">
+        <!-- 首屏要一眼看到好几栋楼：紧凑的标题区 + 搜索 + 城市，下面紧跟大厂横滑和网格 -->
+        <header class="hero" id="hero">
+          <div class="brand"><b>拆我工位</b><span>BOOM OFFICE</span></div>
+          <p class="sub" id="heroSub"><b>不想上班？那就把楼拆了。</b><small>搜你公司的写字楼，30 秒，看能拆掉多少个工位</small></p>
+        </header>
+        <input id="search" type="search" placeholder="搜你的楼、公司或片区" autocomplete="off" />
+        <!-- 上次没拆完 / 同事的挑战：一条醒目的横条 -->
+        <button id="resume" class="resume" hidden><img id="resumeImg" alt="" /><span><small id="resumeLabel"></small><b id="resumeName"></b></span><em id="resumeGo">继续拆 →</em></button>
+        <div id="challenge" class="challenge" hidden>
+          <p id="challengeText"></p>
+          <button id="challengeGo" class="primary">接受挑战</button>
+        </div>
+        <div class="toolbar">
+          <nav id="cities" class="chips"></nav>
+          <select id="sort" aria-label="排序">
+            <option value="default">推荐</option>
+            <option value="tall">最高</option>
+            <option value="name">名称</option>
+          </select>
+        </div>
+        <div id="favBox" class="fav-box" hidden><h3>我的收藏</h3><div id="favList" class="cards"></div></div>
+        <div id="list" class="cards"></div>
+        <button id="more" class="ghost more" hidden></button>
+        <div id="pendingBox" class="pending-box"></div>
+        <!-- 写死在网页里的介绍和常见问题：给搜索引擎、AI 抓取用，内容和 head 里的结构化数据一致 -->
+        <section class="about" aria-label="关于拆我工位">
+          <h2>拆我工位：打工人在线拆写字楼的解压小游戏</h2>
+          <p>拆我工位是一款打工人在线拆写字楼的解压小游戏：搜你公司的写字楼，用咖啡炸弹、键盘锤、周报陨石把它拆掉，30 秒一局，看能拆掉多少个工位。免下载，手机浏览器直接玩，免费。</p>
+          <details><summary>拆我工位是什么游戏？</summary><p>一款 3D 网页解压小游戏。选一栋你上班的写字楼，用咖啡炸弹、键盘锤、周报陨石这些打工人武器把它拆掉，楼会真实地碎裂、倒塌。30 秒一局，结束后生成战报海报，看你拆掉了多少个工位。</p></details>
+          <details><summary>有哪些写字楼可以拆？</summary><p>目前收录了杭州、北京、上海、深圳、广州、成都、武汉、南京、西安、重庆 10 个城市的 166 个写字楼群和科技园区。没有你的楼可以在游戏里申请录入，申请满 3 人就排上日程。</p></details>
+          <details><summary>有哪些武器？</summary><p>咖啡炸弹、键盘锤、鼠标连点、周报陨石是免费武器；分享战报解锁 KPI 地震、加班火箭；一局里打出 S 评级解锁摸鱼巨鲸、需求龙卷风，打出 SS 解锁年终奖核弹。</p></details>
+          <details><summary>怎么和同事比？</summary><p>结束后分享战报海报或链接，同事打开会直接进入同一栋楼，和你的分数比一比；还有写字楼对抗榜，看哪栋楼被拆得最多。</p></details>
+          <details><summary>各城市可拆的写字楼</summary><p><b>杭州</b>：<a href="/b/hz-8647aab0/">阿里巴巴西溪园区</a> · <a href="/b/hz-9d8a3e54/">阿里巴巴滨江园区</a> · <a href="/b/hz-d5f77ab1/">阿里巴巴云谷园区</a> · <a href="/b/hz-46a558f9/">蚂蚁A空间</a> · <a href="/b/hz-08a8a213/">西湖阿里中心</a> · <a href="/b/hz-aa6073ac/">菜鸟总部园区</a> · <a href="/b/hz-93ce7158/">网易大厦</a> · <a href="/b/hz-eb3d71bb/">海康威视总部</a> · <a href="/b/hz-10be6279/">大华股份总部</a> · <a href="/b/hz-a00d1628/">华为杭州研究所</a> · <a href="/b/hz-b744ca97/">新华三大厦</a> · <a href="/b/hz-f5adb417/">同花顺总部</a> · <a href="/b/hz-cca53254/">吉利控股集团总部</a> · <a href="/b/hz-303cab6f/">杭州来福士中心</a> · <a href="/b/hz-a66d9a14/">欧美金融城</a> · <a href="/b/hz-3b6b0c17/">杭州嘉里中心</a> · <a href="/b/hz-f0762ab0/">西湖文化广场</a> · <a href="/b/hz-f6a89400/">黄龙时代广场</a> · <a href="/b/hz-732950cc/">梦想小镇</a> · <a href="/b/hz-06e5414e/">海创园</a> · <a href="/b/hz-c40608d4/">滨江物联网产业园</a> · <a href="/b/hz-dfebe7c9/">杭州之门</a> · <a href="/b/hz-76e01927/">博地中心</a> · <a href="/b/hz-eee42d0f/">万象世界中心</a> · <a href="/b/hz-848ad561/">浙江财富金融中心</a> · <a href="/b/hz-59ca5070/">华润大厦</a> · <a href="/b/hz-fd1e388b/">高德置地广场</a> · <a href="/b/hz-d4137676/">万银国际</a> · <a href="/b/hz-3b2fbffc/">杭州平安金融中心</a> · <a href="/b/hz-44cc83f9/">世茂智慧之门</a> · <a href="/b/hz-a0fea72c/">星耀城</a> · <a href="/b/hz-5b7b30b7/">杭州恒隆广场</a> · <a href="/b/hz-eca8f86a/">杭州中心</a> · <a href="/b/hz-49f8cbfe/">黄龙万科中心</a> · <a href="/b/hz-6ad579ec/">浙商财富中心</a> · <a href="/b/hz-408ec78b/">西溪首座</a> · <a href="/b/hz-9f7f3417/">人工智能小镇</a> · <a href="/b/hz-b6ead2e0/">萧山信息港小镇</a> · <a href="/b/hz-cb8197fd/">东部湾总部大楼</a> · <a href="/b/hz-8d537085/">奥体万科中心</a> · <a href="/b/hz-6b820b32/">杭州国际办公中心</a> · <a href="/b/hz-fba6260b/">艺尚小镇</a></p><p><b>北京</b>：<a href="/b/bj-889016a0/">百度大厦</a> · <a href="/b/bj-f445799b/">百度科技园</a> · <a href="/b/bj-509fbd62/">京东集团总部</a> · <a href="/b/bj-bb1aab79/">恒电大厦</a> · <a href="/b/bj-256ad890/">快手总部</a> · <a href="/b/bj-26155121/">小米科技园</a> · <a href="/b/bj-69cb6391/">网易北京研发中心</a> · <a href="/b/bj-e85bf137/">新浪总部大楼</a> · <a href="/b/bj-818ff77f/">联想北京总部园区</a> · <a href="/b/bj-e6d9386d/">360大厦</a> · <a href="/b/bj-5640669c/">华为北京研究所</a> · <a href="/b/bj-132750cc/">用友产业园</a> · <a href="/b/bj-d4a89869/">国贸大厦</a> · <a href="/b/bj-3ab59f34/">北京银泰中心</a> · <a href="/b/bj-77882903/">华贸中心</a> · <a href="/b/bj-b2b6ad04/">北京财富中心</a> · <a href="/b/bj-9a64c602/">北京环球金融中心</a> · <a href="/b/bj-abe6f324/">嘉里中心</a> · <a href="/b/bj-94749771/">望京SOHO</a> · <a href="/b/bj-b8fc8576/">三里屯SOHO</a> · <a href="/b/bj-fb97da72/">建外SOHO</a> · <a href="/b/bj-44aa1870/">光华路SOHO</a> · <a href="/b/bj-baad1166/">远洋国际中心</a> · <a href="/b/bj-a193b6d4/">方恒国际中心</a> · <a href="/b/bj-45e3ff0d/">银河SOHO</a> · <a href="/b/bj-473d67d3/">东方广场</a> · <a href="/b/bj-39fba2ba/">来福士中心</a> · <a href="/b/bj-430587e0/">金融街中心</a> · <a href="/b/bj-efd4eed0/">凯晨世贸中心</a> · <a href="/b/bj-a6b64e2d/">鼎好大厦</a> · <a href="/b/bj-c0bb13c6/">融科资讯中心</a> · <a href="/b/bj-7bbc2c74/">中关村软件园</a></p><p><b>上海</b>：<a href="/b/sh-ea8c7e10/">凌空SOHO</a> · <a href="/b/sh-7ea3df78/">金虹桥国际中心</a> · <a href="/b/sh-08bdd115/">国正中心</a> · <a href="/b/sh-3bfcca70/">华为练秋湖研发中心</a> · <a href="/b/sh-4e01ab3e/">网易上海国际文创科技园</a> · <a href="/b/sh-6c8eff09/">百度上海研发中心</a> · <a href="/b/sh-af7129f9/">米哈游总部</a> · <a href="/b/sh-3be677bf/">中兴通讯上海研发中心</a> · <a href="/b/sh-a1261d99/">微软紫竹园区</a> · <a href="/b/sh-1e8fcc44/">上海国金中心</a> · <a href="/b/sh-e66b2fc4/">浦江双辉大厦</a> · <a href="/b/sh-9b84412b/">前滩中心</a> · <a href="/b/sh-0d89063a/">张江高科技园区</a> · <a href="/b/sh-4d612628/">恒隆广场</a> · <a href="/b/sh-f429c9ea/">静安嘉里中心</a> · <a href="/b/sh-62136786/">兴业太古汇</a> · <a href="/b/sh-cc9995b4/">新天地企业天地</a> · <a href="/b/sh-9264f066/">港汇恒隆广场</a> · <a href="/b/sh-f9904990/">漕河泾开发区</a> · <a href="/b/sh-0637c4aa/">虹桥天地</a></p><p><b>深圳</b>：<a href="/b/sz-e8b75e99/">华为坂田基地</a> · <a href="/b/sz-e8911e42/">大疆天空之城</a> · <a href="/b/sz-02cd705a/">中兴通讯大厦</a> · <a href="/b/sz-110b0add/">顺丰总部大厦</a> · <a href="/b/sz-97e0d5a6/">荣耀总部（深业中城）</a> · <a href="/b/sz-ab363646/">迈瑞大厦</a> · <a href="/b/sz-5c5190e9/">比亚迪全球总部（坪山）</a> · <a href="/b/sz-ff647c02/">百度国际大厦</a> · <a href="/b/sz-6a468afc/">卓越世纪中心</a> · <a href="/b/sz-2fc24892/">深业上城</a> · <a href="/b/sz-09a7066a/">汉京金融中心</a> · <a href="/b/sz-c817a503/">深圳湾科技生态园</a> · <a href="/b/sz-5cc6fabf/">深圳软件产业基地</a> · <a href="/b/sz-5329e4e0/">南山智园</a> · <a href="/b/sz-6f4e7fbc/">卓越前海壹号</a> · <a href="/b/sz-13f0a23f/">天安云谷</a> · <a href="/b/sz-38c3c875/">星河WORLD</a></p><p><b>广州</b>：<a href="/b/gz-93ce7158/">网易大厦</a> · <a href="/b/gz-5c1486cf/">唯品会总部大厦</a> · <a href="/b/gz-4d50b346/">阿里巴巴华南运营中心</a> · <a href="/b/gz-5bad020f/">小鹏汽车总部</a> · <a href="/b/gz-536c1af3/">广汽研究院</a> · <a href="/b/gz-a3a655e2/">中信广场</a> · <a href="/b/gz-f9d52c54/">太古汇</a> · <a href="/b/gz-fd1e388b/">高德置地广场</a> · <a href="/b/gz-ef31acdf/">天河软件园</a> · <a href="/b/gz-e3d3eab4/">保利国际广场</a> · <a href="/b/gz-615e1693/">广州科学城</a></p><p><b>成都</b>：<a href="/b/cd-442ee8ac/">华为成都研究所</a> · <a href="/b/cd-8ebb6e1b/">阿里巴巴西部基地</a> · <a href="/b/cd-8d195a61/">京东西南总部大厦</a> · <a href="/b/cd-f7c6a446/">成都IFS</a> · <a href="/b/cd-35e957e1/">仁恒置地广场</a> · <a href="/b/cd-5ac8f627/">来福士广场</a> · <a href="/b/cd-d2d8dc8c/">成都银泰中心</a> · <a href="/b/cd-42c8d80f/">中海国际中心</a> · <a href="/b/cd-5ff5f44c/">天府软件园</a> · <a href="/b/cd-9b605e9d/">高新孵化园</a></p><p><b>武汉</b>：<a href="/b/wh-9ee9fd33/">光谷软件园</a> · <a href="/b/wh-af63b415/">小米武汉总部</a> · <a href="/b/wh-a8b89646/">华为武汉研究所</a> · <a href="/b/wh-c77c6719/">金山集团武汉总部</a> · <a href="/b/wh-af89bc74/">泛海国际SOHO城</a> · <a href="/b/wh-5e796a9e/">武汉天地企业中心</a> · <a href="/b/wh-81dd3170/">光谷金融港</a> · <a href="/b/wh-0135830a/">武汉未来科技城</a></p><p><b>南京</b>：<a href="/b/nj-76ce127e/">苏宁总部</a> · <a href="/b/nj-2c20e3dc/">华为南京研究所</a> · <a href="/b/nj-bdfb7ad3/">中兴通讯南京研发中心</a> · <a href="/b/nj-cdc50da1/">南京国际广场</a> · <a href="/b/nj-8c770e8b/">徐庄软件园</a> · <a href="/b/nj-c7e31734/">南京国金中心</a> · <a href="/b/nj-83156e89/">河西金融城</a> · <a href="/b/nj-f60d060d/">新城科技园</a> · <a href="/b/nj-85f826ed/">中国（南京）软件谷</a> · <a href="/b/nj-34afa453/">江北新区研创园</a></p><p><b>西安</b>：<a href="/b/xa-814a60c9/">华为西安研究所</a> · <a href="/b/xa-f92d15c3/">中兴通讯西安研究所</a> · <a href="/b/xa-f0a8ed81/">荣耀西安研发中心</a> · <a href="/b/xa-98f43622/">西安绿地中心</a> · <a href="/b/xa-73b1eecf/">西安软件园</a> · <a href="/b/xa-79e40b5c/">西安曲江文创中心</a> · <a href="/b/xa-59e334b4/">陕西国际体育之窗</a> · <a href="/b/xa-517ccce7/">西安环普科技产业园</a></p><p><b>重庆</b>：<a href="/b/cq-25a8543c/">长安汽车全球研发中心</a> · <a href="/b/cq-ef6226b0/">猪八戒网总部</a> · <a href="/b/cq-9dc1662d/">海康威视重庆科技园</a> · <a href="/b/cq-cf4c09b7/">重庆来福士</a> · <a href="/b/cq-c5e4b81f/">大都会东方广场</a> · <a href="/b/cq-6203b540/">重庆国金中心</a> · <a href="/b/cq-c478a4df/">江北嘴金融城</a> · <a href="/b/cq-c2586417/">仙桃国际大数据谷</a></p></details>
+        </section>
+        <footer class="disclaimer">非官方娱乐作品，与任何写字楼、物业及入驻企业无关；楼体按公开资料示意建模，与真实建筑有差异。</footer>
+      </div>
+      <!-- 「随机拆一栋」放最右边：右手拇指最顺手 -->
+      <div class="dock">
+        <button id="apply" class="ghost" hidden>申请录入</button>
+        <button id="openBoard" class="ghost" hidden>对抗榜</button>
+        <button id="random" class="primary">🎲 随机拆一栋</button>
+      </div>
+    </section>
+
+    <section id="hud" hidden>
+      <div class="top">
+        <div class="info">
+          <div id="teamName" class="team"></div>
+          <div class="score"><span id="score">0</span> 分</div>
+        </div>
+        <div class="top-actions">
+          <button id="nightToggle" class="small" aria-label="切换白天 / 夜晚">🌙</button>
+          <button id="reset" class="small">重来</button>
+          <button id="hudBoard" class="small" hidden>榜单</button>
+          <button id="back" class="small">换楼</button>
+        </div>
+      </div>
+      <div id="bigTimer" class="big-timer">
+        <div><b id="timerNum">60</b><span id="timerLabel">秒</span></div>
+        <div class="timer-track"><i id="timerBar"></i></div>
+        <div id="target" class="target" hidden></div>
+      </div>
+      <div id="rank" class="rank">
+        <div class="rank-row"><b id="rankLetter">D</b><em id="rankMult"></em></div>
+        <div class="rank-track"><i id="rankBar"></i></div>
+        <div id="rankText" class="rank-text"></div>
+      </div>
+      <div id="tag" class="tag" hidden></div>
+      <div id="hint" class="hint">点一下楼就碎 · 拖动转视角 · 双指缩放</div>
+      <div id="charge" class="charge" hidden></div>
+      <div id="weapons" class="weapons"></div>
+    </section>
+
+    <section id="result" class="screen overlay" hidden>
+      <p class="tip" id="resultTip">长按战报保存，发给同事比比</p>
+      <img id="card" alt="本局结果卡" />
+      <p id="shareMsg" class="tip"></p>
+      <button id="change" class="link-btn">换一栋楼 ›</button>
+      <!-- 底部常驻：再来一局和分享并排，手机第一屏就看得到 -->
+      <div class="result-bar">
+        <button id="again" class="ghost">再拆一次</button>
+        <button id="shareResult" class="primary share-btn">分享 · 解锁特殊武器</button>
+      </div>
+    </section>
+
+    <section id="board" class="screen overlay" hidden>
+      <h2>写字楼对抗榜</h2>
+      <div class="tabs">
+        <button data-kind="today" class="tab active">今日</button>
+        <button data-kind="all" class="tab">总榜</button>
+      </div>
+      <ol id="boardList" class="board"></ol>
+      <button id="closeBoard" class="ghost">关闭</button>
+    </section>
+
+    <section id="suggest" class="screen overlay" hidden>
+      <h2>申请录入写字楼</h2>
+      <p class="tip left">没找到你的楼？申请录入。满 3 位同事申请，它就会出现在「即将支持」里，外形整理好就能拆。</p>
+      <label class="field"><span>城市</span><input id="sgCity" list="sgCities" maxlength="10" placeholder="选一个，或直接输入" autocomplete="off" /></label>
+      <datalist id="sgCities"></datalist>
+      <label class="field"><span>所在区</span><input id="sgDistrict" list="sgDistricts" maxlength="10" placeholder="选填，比如：滨江" autocomplete="off" /></label>
+      <datalist id="sgDistricts"></datalist>
+      <label class="field"><span>楼名</span><input id="sgName" maxlength="20" placeholder="比如：某某国际大厦" autocomplete="off" /></label>
+      <p id="sgMsg" class="tip left"></p>
+      <div class="actions">
+        <button id="sgSubmit" class="primary">申请</button>
+        <button id="sgClose" class="ghost">关闭</button>
+      </div>
+    </section>
+
+    <section id="sharePanel" class="screen overlay" hidden>
+      <h2>分享战报</h2>
+      <p id="shareTip" class="tip left"></p>
+      <img id="shareCard" class="share-card" alt="战报" />
+      <div class="share-actions">
+        <button id="spDownload" class="primary">下载战报</button>
+        <button id="spCopyLink" class="ghost">复制挑战链接</button>
+        <button id="spCopyAll" class="ghost">复制文案</button>
+      </div>
+      <p id="spMsg" class="tip"></p>
+      <button id="spClose" class="ghost">关闭</button>
+    </section>
+
+    <section id="unlock" class="screen overlay" hidden>
+      <div class="unlock-icon" id="unlockIcon"></div>
+      <h2 id="unlockName"></h2>
+      <p id="unlockHint" class="tip"></p>
+      <p id="unlockMore" class="tip left"></p>
+      <div class="actions">
+        <button id="unlockClose" class="ghost">知道了</button>
+      </div>
+    </section>
+
+    <div id="loading" class="loading" hidden>正在搭楼，马上就能拆…</div>
+  </body>
+</html>
